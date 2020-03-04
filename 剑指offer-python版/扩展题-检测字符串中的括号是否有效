@@ -1,0 +1,53 @@
+# Python检测字符串中的括号是否有效
+```bash
+	()\[]\{}    返回True
+	([{}])      返回True
+	([)]         返回false
+	(){}[]      返回True
+	((])        返回false
+
+```
+利用栈来解决问题：
+```python
+def check_brace(str_raw):
+    # 如果传入为空，直接返回True
+    if str_raw == "":
+        return True
+
+    # 定义一个空列表，模拟栈。
+    stack = []
+
+    while str_raw != "":
+        # 获取本次循环的字符串的第一个字符
+        thisChar = str_raw[0]
+        # ^_^去掉第一个元素
+        str_raw = str_raw[1:]
+        # 如果本次循环的第一个字符是左括号，将其压栈
+        if thisChar == "(" or thisChar == "{" or thisChar == "[":
+            stack.append(thisChar)
+        # 如果本次循环的第一个字符是右括号，检测栈是否为空，栈长为空表示栈内没有可以匹配的左括号，返回false
+        # 如果栈长不为空，且栈内最后一个元素是相匹配的左括号，此次匹配成功，将其弹出，进入下一轮循环。
+        elif thisChar == ")" or thisChar == "}" or thisChar == "]":
+            # 提高效率
+            len_stack = len(stack)
+            if len_stack == 0:
+                return False
+            else:
+                if thisChar == ")" and stack[len_stack - 1] == "(":
+                    stack.pop(len_stack - 1)
+                elif thisChar == "]" and stack[len_stack - 1] == "[":
+                    stack.pop(len_stack - 1)
+                elif thisChar == "}" and stack[len_stack - 1] == "{":
+                    stack.pop(len_stack - 1)
+                else:
+                    return False
+    # 循环结束，如果栈为空，则表示全部匹配完成
+    if stack == []:
+        return True
+    else:
+        return False
+
+
+print(check_brace('(){}[]'))
+
+```
