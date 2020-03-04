@@ -1,5 +1,5 @@
 # Python检测字符串中的括号是否有效
-```bash
+```Bash
 	()\[]\{}    返回True
 	([{}])      返回True
 	([)]         返回false
@@ -8,7 +8,7 @@
 
 ```
 利用栈来解决问题：
-```python
+```Python
 def check_brace(str_raw):
     # 如果传入为空，直接返回True
     if str_raw == "":
